@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Webhook Data - <%= data.webhookId %></title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const socket = io();
+
+            socket.on('requestReceived', function(receivedData) {
+                if (receivedData.webhookId === "<%= data.webhookId %>") {
+                    const requestData = receivedData.requestData;
+                    const container = document.getElementById('requestDataContainer');
+                    const newElement = document.createElement('pre');
+                    newElement.innerText = JSON.stringify(requestData, null, 4);
+                    container.appendChild(newElement);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Received Data for Webhook ID: <%= data.webhookId %></h1>
+    <div id="requestDataContainer">
+        <% if (data.requests && data.requests.length > 0) { %>
+            <% data.requests.forEach(function(request) { %>
+                <pre><%= JSON.stringify(request, null, 4) %></pre>
+            <% }) %>
+        <% } else { %>
+            <p>No data received yet for this webhook.</p>
+        <% } %>
+    </div>
+</body>
+</html>

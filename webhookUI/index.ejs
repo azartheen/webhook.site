@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhooks List</title>
+</head>
+<body>
+    <h1>Existing Webhooks</h1>
+    <ul>
+      
+        <% webhooks.forEach(function(webhook) { %>
+          <li>Webhook ID: <%= webhook.webhookId %>, URL: <a href="<%= baseUrl %><%= webhook.webhookId %>"><%= baseUrl %><%= webhook.webhookId %></a></li>
+
+        <% }); %>
+    </ul>
+    
+    <button onclick="window.location.href='/create-webhook';">Create New Webhook</button>
+</body>
+</html>
